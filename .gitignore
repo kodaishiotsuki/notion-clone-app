@@ -1,0 +1,22 @@
+# Node.js
+node_modules/
+
+# Express.js specific
+.env.local
+.env.development.local
+.env.production.local
+*.log
+
+# AI
+ai/.env
+
+# IDE/Editor specific
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw??
+
+dist
