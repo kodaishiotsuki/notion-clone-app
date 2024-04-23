@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 // Mongoose のスキーマを作成
 const userSchema = new mongoose.Schema({
@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     type: String, // 型を指定する
     required: true, // 必須カラムかどうか
   },
-});
+})
 
 // モデルを作成
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model('User', userSchema)
