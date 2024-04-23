@@ -9,8 +9,11 @@ import { User } from './src/v1/models/user'
 dotenv.config({ path: './.env.local' })
 
 const app: Express = express()
-const port = 3001
 
+// JSON データを受け取れるようにする
+app.use(express.json())
+
+const port = 3001
 const URL = process.env.MONGODB_URI
 const SECRET_KEY = process.env.SECRET_KEY
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY
