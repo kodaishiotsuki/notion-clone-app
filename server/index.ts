@@ -41,13 +41,23 @@ mongoose
 //ユーザー新規登録API
 app.post(
   '/register',
-  body('username')
-    .isLength({
-      min: 8,
-    })
-    .withMessage('ユーザー名は8文字以上である必要があります'),
+  body('username').isLength({ min: 8 }).withMessage('ユーザー名は8文字以上である必要があります'),
   body('password').isLength({ min: 8 }).withMessage('パスワードは8文字以上である必要があります'),
   body('confirmPassword').isLength({ min: 8 }).withMessage('確認パスワードは8文字以上である必要があります'),
+  body('username').custom((value) => {
+    return User.findOne({ username: value }).then((user) => {
+      if (user) {
+        return Promise.reject('ユーザー名はすでに使用されています')
+      }
+    })
+  }),
+  (req: express.Request, res: express.Response, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+    next()
+  },
   async (req: Request, res: Response) => {
     // パスワードの受け取り
     const password = req.body.password
