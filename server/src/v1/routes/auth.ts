@@ -1,14 +1,10 @@
 import { AES } from 'crypto-js'
-import dotenv from 'dotenv'
 import express, { Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
 import jwt from 'jsonwebtoken'
 
+import { SECRET_KEY, TOKEN_SECRET_KEY } from '../../../config'
 import { User } from '../models/user'
-dotenv.config({ path: './.env.local' })
-
-const SECRET_KEY = process.env.SECRET_KEY
-const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY
 
 const router = express.Router()
 
