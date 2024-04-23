@@ -2,6 +2,7 @@
 node_modules/
 
 # Express.js specific
+.env
 .env.local
 .env.development.local
 .env.production.local
