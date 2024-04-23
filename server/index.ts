@@ -3,6 +3,8 @@ import type { Express, Request, Response } from "express";
 import mongoose from "mongoose";
 import AES from "crypto-js/aes";
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+
 import { User } from "./src/v1/models/user";
 dotenv.config({ path: "./.env.local" });
 
@@ -11,13 +13,10 @@ const port = 3001;
 
 const URL = process.env.MONGODB_URI;
 const SECRET_KEY = process.env.SECRET_KEY;
+const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
 
 if (!URL) {
   throw new Error("The MongoDB URI is not defined.");
-}
-
-if (!SECRET_KEY) {
-  throw new Error("The SECRET_KEY is not defined.");
 }
 
 // port 3001 でサーバーを起動
@@ -41,10 +40,24 @@ app.post("/register", async (req: Request, res: Response) => {
   const password = req.body.password;
 
   try {
-    //パスワードの暗号化
-    req.body.password = AES.encrypt(password, process.env.SECRET_KEY as string);
+    // パスワードの暗号化
+    req.body.password = AES.encrypt(password, SECRET_KEY as string);
 
-    //ユーザーの新規登録
+    // ユーザーの新規登録
     const user = await User.create(req.body);
-  } catch (error) {}
+
+    // JWTの生成
+    const token = jwt.sign(
+      {
+        id: user._id,
+      },
+      TOKEN_SECRET_KEY as string,
+      {
+        expiresIn: "24h",
+      }
+    );
+    return res.status(200).json({ user, token });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 });
