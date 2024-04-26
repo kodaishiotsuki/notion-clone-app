@@ -1,4 +1,10 @@
-import mongoose from 'mongoose'
+import mongoose, { Document } from 'mongoose'
+
+// User の型定義をインターフェースとして作成
+interface IUser extends Document {
+  username: string
+  password: string
+}
 
 // Mongoose のスキーマを作成
 const userSchema = new mongoose.Schema({
@@ -14,4 +20,4 @@ const userSchema = new mongoose.Schema({
 })
 
 // モデルを作成
-export const User = mongoose.model('User', userSchema)
+export const User = mongoose.model<IUser>('User', userSchema)
