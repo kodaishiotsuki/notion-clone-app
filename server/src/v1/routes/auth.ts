@@ -1,7 +1,7 @@
 import express from 'express'
 import { body } from 'express-validator'
 
-import { register } from '../controllers/user'
+import { login, register } from '../controllers/user'
 import { validate } from '../handlers/validation'
 import { User } from '../models/user'
 
@@ -30,6 +30,7 @@ router.post(
   body('username').isLength({ min: 8 }).withMessage('ユーザー名は8文字以上である必要があります'),
   body('password').isLength({ min: 8 }).withMessage('パスワードは8文字以上である必要があります'),
   validate,
+  login,
 )
 
 export default router
