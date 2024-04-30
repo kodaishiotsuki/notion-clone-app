@@ -18,8 +18,8 @@ export default function AuthLayout() {
           <img src={notionLogo} style={{ width: '100px', height: '100px', marginBottom: 3 }} alt='Notion Logo' />
           Notionクローン開発
         </Box>
+        <Outlet />
       </Container>
-      <Outlet />
     </div>
   )
 }

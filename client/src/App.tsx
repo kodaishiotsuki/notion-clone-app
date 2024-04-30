@@ -1,8 +1,8 @@
-import './App.css'
 import { CssBaseline } from '@mui/material'
 import { blue } from '@mui/material/colors'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Route, BrowserRouter, Routes } from 'react-router-dom' // または適切なルーターコンポーネントをインポート
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { BrowserRouter, Route, Routes } from 'react-router-dom' // または適切なルーターコンポーネントをインポート
+import './App.css'
 
 import AuthLayout from './components/layout/AuthLayout'
 import Login from './pages/Login'
@@ -14,6 +14,7 @@ function App() {
       primary: blue,
     },
   })
+
   return (
     <>
       <ThemeProvider theme={theme}>
