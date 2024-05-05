@@ -44,7 +44,14 @@ export const login = async (req: Request, res: Response) => {
 
     // ユーザーが存在しない場合
     if (!user) {
-      return res.status(401).json({ message: 'ユーザーが見つかりません' })
+      return res.status(401).json({
+        errors: [
+          {
+            path: 'username',
+            msg: 'ユーザー名が存在しません',
+          },
+        ],
+      })
     }
 
     // パスワードの復号化
@@ -54,7 +61,14 @@ export const login = async (req: Request, res: Response) => {
 
     // パスワードが一致しない場合
     if (password !== originalPassword) {
-      return res.status(401).json({ message: 'パスワードが一致しません' })
+      return res.status(401).json({
+        errors: [
+          {
+            path: 'password',
+            msg: 'パスワードが一致しません',
+          },
+        ],
+      })
     }
 
     // JWTの生成
