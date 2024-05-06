@@ -55,3 +55,18 @@ export const update = async (req: Request, res: Response) => {
     return res.status(500).json(error)
   }
 }
+
+export const deleted = async (req: Request, res: Response) => {
+  const { memoId } = req.params
+  try {
+    const memo = await Memo.findOne({ user: req.user._id, _id: memoId })
+    if (!memo) return res.status(404).json({ message: 'メモが見つかりません' })
+
+    await Memo.deleteOne({
+      _id: memoId,
+    })
+    res.status(200).json({ message: 'メモを削除しました' })
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}

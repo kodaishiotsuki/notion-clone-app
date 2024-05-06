@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { create, getAll, getOne, update } from '../controllers/memo'
+import { create, deleted, getAll, getOne, update } from '../controllers/memo'
 import { verifyToken } from '../handlers/tokenHandler'
 
 const router = express.Router()
@@ -16,5 +16,8 @@ router.get('/:memoId', verifyToken, getOne)
 
 // メモを更新
 router.put('/:memoId', verifyToken, update)
+
+// メモを削除
+router.delete('/:memoId', verifyToken, deleted)
 
 export default router

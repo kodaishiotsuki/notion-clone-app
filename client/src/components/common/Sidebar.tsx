@@ -17,7 +17,7 @@ export default function Sidebar() {
   const memos = useAppSelector(memoSelector)
   const [activeIndex, setActiveIndex] = useState<number>(0)
 
-  //ログアウト処理
+  // ログアウト処理
   const logout = () => {
     localStorage.removeItem('token')
     navigate('/login')
