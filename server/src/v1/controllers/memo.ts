@@ -12,7 +12,16 @@ export const create = async (req: Request, res: Response) => {
       user: req.user._id,
       position: memoCount > 0 ? memoCount : 0,
     })
-    return res.status(200).json(memo)
+    return res.status(201).json(memo)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
+export const getAll = async (req: Request, res: Response) => {
+  try {
+    const memos = await Memo.find({ user: req.user._id }).sort('-position')
+    return res.status(200).json(memos)
   } catch (error) {
     return res.status(500).json(error)
   }
