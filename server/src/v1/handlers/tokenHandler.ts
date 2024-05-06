@@ -1,12 +1,11 @@
-import { NextFunction, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
 import { TOKEN_SECRET_KEY } from '../../../config'
 import { User } from '../models/user'
-import { CustomRequest } from '../types'
 
 // Bearerトークンをデコードする関数
-const tokenDecode = (req: CustomRequest): JwtPayload | false => {
+const tokenDecode = (req: Request): JwtPayload | false => {
   // リクエストヘッダーからBearerトークンを取得
   const bearerHeader = req.headers['authorization']
   //bearerHeaderが存在する場合
@@ -26,7 +25,7 @@ const tokenDecode = (req: CustomRequest): JwtPayload | false => {
 }
 
 // JWT認証を検証するためのミドルウェア
-export const verifyToken = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
   // Bearerトークンをデコード
   const decodedToken = tokenDecode(req)
   //decodedTokenが存在する場合

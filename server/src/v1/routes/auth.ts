@@ -1,11 +1,10 @@
-import express, { Response } from 'express'
+import express, { Response, Request } from 'express'
 import { body } from 'express-validator'
 
 import { login, register } from '../controllers/user'
 import { verifyToken } from '../handlers/tokenHandler'
 import { validate } from '../handlers/validation'
 import { User } from '../models/user'
-import { CustomRequest } from '../types'
 
 const router = express.Router()
 
@@ -36,7 +35,7 @@ router.post(
 )
 
 //JWTの検証API
-router.post('/verify-token', verifyToken, (req: CustomRequest, res: Response) => {
+router.post('/verify-token', verifyToken, (req: Request, res: Response) => {
   return res.status(200).json({ user: req.user })
 })
 
