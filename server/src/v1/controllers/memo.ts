@@ -3,10 +3,8 @@ import { Request, Response } from 'express'
 import { Memo } from '../models/memo'
 
 export const create = async (req: Request, res: Response) => {
-  console.log(req)
   try {
     const memoCount = await Memo.find().countDocuments()
-    console.log('memoCount', memoCount)
     // メモ新規作成
     const memo = await Memo.create({
       user: req.user._id,
@@ -30,7 +28,7 @@ export const getAll = async (req: Request, res: Response) => {
 export const getOne = async (req: Request, res: Response) => {
   const { memoId } = req.params
   try {
-    const memo = await Memo.findOne({ user: req.user, _id: memoId })
+    const memo = await Memo.findOne({ user: req.user._id, _id: memoId })
     if (!memo) return res.status(404).json({ message: 'メモが見つかりません' })
     res.status(200).json(memo)
   } catch (error) {
