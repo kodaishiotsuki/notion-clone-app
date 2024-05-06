@@ -1,7 +1,9 @@
 import { AddBoxOutlined, LogoutOutlined } from '@mui/icons-material'
 import { Box, Drawer, IconButton, List, ListItemButton, Typography } from '@mui/material'
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
+import memoApi from '../../api/memoApi'
 import assets from '../../assets'
 import { userSelector } from '../../redux/features/userSlice'
 import { useAppSelector } from '../../redux/hooks'
@@ -15,6 +17,18 @@ export default function Sidebar() {
     localStorage.removeItem('token')
     navigate('/login')
   }
+
+  useEffect(() => {
+    const getMemos = async () => {
+      try {
+        const res = await memoApi.getAll()
+        console.log(res.data)
+      } catch (error) {
+        alert(error)
+      }
+    }
+    getMemos()
+  }, [])
 
   return (
     <Drawer

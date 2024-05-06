@@ -9,6 +9,7 @@ import axiosClient from './axiosClient'
 
 const memoApi = {
   create: () => axiosClient.post('/memo/create'),
+  getAll: () => axiosClient.get('/memo/getAll'),
 }
 
 export default memoApi
