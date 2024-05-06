@@ -10,6 +10,7 @@ interface RegisterParams {
 const authApi = {
   register: (params: RegisterParams) => axiosClient.post('/auth/register', params),
   login: (params: RegisterParams) => axiosClient.post('/auth/login', params),
+  verifyToken: () => axiosClient.post('/auth/verify-token'),
 }
 
 export default authApi
