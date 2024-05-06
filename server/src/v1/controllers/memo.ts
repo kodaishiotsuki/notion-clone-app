@@ -21,7 +21,18 @@ export const create = async (req: Request, res: Response) => {
 export const getAll = async (req: Request, res: Response) => {
   try {
     const memos = await Memo.find({ user: req.user._id }).sort('-position')
-    return res.status(200).json(memos)
+    res.status(200).json(memos)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
+export const getOne = async (req: Request, res: Response) => {
+  const { memoId } = req.params
+  try {
+    const memo = await Memo.findOne({ user: req.user, _id: memoId })
+    if (!memo) return res.status(404).json({ message: 'メモが見つかりません' })
+    res.status(200).json(memo)
   } catch (error) {
     return res.status(500).json(error)
   }
