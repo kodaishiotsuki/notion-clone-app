@@ -2,11 +2,14 @@ import { Box } from '@mui/material'
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
+import { setUser } from '../../redux/features/userSlice'
+import { useAppDispatch } from '../../redux/hooks'
 import authUtils from '../../utils/authUtils'
 import Sidebar from '../common/Sidebar'
 
 export default function AppLayout() {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   //JWTを持っているかどうかを確認
   useEffect(() => {
@@ -15,29 +18,30 @@ export default function AppLayout() {
       const user = await authUtils.isAuthenticated()
       if (!user) {
         navigate('/login')
+      } else {
+        //ユーザーを保存する
+        dispatch(setUser({ value: user }))
       }
     }
     checkAuth()
-  }, [navigate])
+  }, [navigate, dispatch])
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: 'flex',
+      }}
+    >
+      <Sidebar />
       <Box
         sx={{
-          display: 'flex',
+          flexGrow: 1,
+          p: 1,
+          width: 'max-content',
         }}
       >
-        <Sidebar />
-        <Box
-          sx={{
-            flexGrow: 1,
-            p: 1,
-            width: 'max-content',
-          }}
-        >
-          <Outlet />
-        </Box>
+        <Outlet />
       </Box>
-    </div>
+    </Box>
   )
 }

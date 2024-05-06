@@ -1,11 +1,14 @@
 import { AddBoxOutlined, LogoutOutlined } from '@mui/icons-material'
 import { Box, Drawer, IconButton, List, ListItemButton, Typography } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import assets from '../../assets'
+import { userSelector } from '../../redux/features/userSlice'
+import { useAppSelector } from '../../redux/hooks'
 
 export default function Sidebar() {
   const navigate = useNavigate()
+  const user = useAppSelector(userSelector)
 
   //ログアウト処理
   const logout = () => {
@@ -40,7 +43,7 @@ export default function Sidebar() {
             }}
           >
             <Typography variant='body2' fontWeight='700'>
-              UserName
+              {user.username}
             </Typography>
             <IconButton onClick={logout}>
               <LogoutOutlined />
@@ -87,6 +90,15 @@ export default function Sidebar() {
               <AddBoxOutlined fontSize='small' />
             </IconButton>
           </Box>
+        </ListItemButton>
+        <ListItemButton
+          sx={{
+            pl: '20px',
+          }}
+          component={Link}
+          to='/memo'
+        >
+          <Typography>仮置きのメモ</Typography>
         </ListItemButton>
       </List>
     </Drawer>

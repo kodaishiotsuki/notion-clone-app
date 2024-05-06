@@ -32,7 +32,8 @@ module.exports = {
     ],
     'import/newline-after-import': ['error', { count: 1 }],
     'import/no-duplicates': ['error'],
-    'prettier/prettier': ['error'], // Ensure Prettier rules are treated as errors
+    'prettier/prettier': ['error'], // Ensure Prettier rules are treated as errors,
+    '@typescript-eslint/no-explicit-any': 'off',
   },
   settings: {
     'import/resolver': {
