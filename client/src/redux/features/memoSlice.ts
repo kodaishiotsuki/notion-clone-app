@@ -25,13 +25,13 @@ export const memoSlice = createSlice({
     setMemo: (state, action: PayloadAction<MemoState>) => {
       state.value = action.payload.value // アクションのペイロードに基づいて状態を更新
     },
-    addMemo: (state, action: PayloadAction<Memo>) => {
-      state.value.push(action.payload)
-    },
+    // addMemo: (state, action: PayloadAction<Memo>) => {
+    //   state.value.push(action.payload)
+    // },
   },
 })
 
-export const { setMemo, addMemo } = memoSlice.actions
+export const { setMemo } = memoSlice.actions
 
 export const memoSelector = (state: RootState) => state.memo.value
 

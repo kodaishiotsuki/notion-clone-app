@@ -4,12 +4,13 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import memoApi from '../api/memoApi'
-import { addMemo } from '../redux/features/memoSlice'
-import { useAppDispatch } from '../redux/hooks'
+import { memoSelector, setMemo } from '../redux/features/memoSlice'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
 export default function Home() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const memos = useAppSelector(memoSelector)
 
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -17,8 +18,8 @@ export default function Home() {
     try {
       setLoading(true)
       const res = await memoApi.create()
-      dispatch(addMemo(res.data)) // ストアに新しいメモを追加
-      console.log(res.data)
+      const newMemos = [res.data, ...memos]
+      dispatch(setMemo({ value: newMemos }))
       navigate(`/memo/${res.data._id}`)
     } catch (error) {
       alert(error)

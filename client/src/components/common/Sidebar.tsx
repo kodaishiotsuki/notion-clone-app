@@ -41,6 +41,18 @@ export default function Sidebar() {
     setActiveIndex(activeIndex)
   }, [navigate, memoId, memos])
 
+  //メモを追加
+  const addMemo = async () => {
+    try {
+      const res = await memoApi.create()
+      const newMemos = [res.data, ...memos]
+      dispatch(setMemo({ value: newMemos }))
+      navigate(`/memo/${res.data._id}`)
+    } catch (error) {
+      alert(error)
+    }
+  }
+
   return (
     <Drawer
       container={window.document.body}
@@ -111,7 +123,7 @@ export default function Sidebar() {
             <Typography variant='body2' fontWeight='700'>
               プライベート
             </Typography>
-            <IconButton>
+            <IconButton onClick={addMemo}>
               <AddBoxOutlined fontSize='small' />
             </IconButton>
           </Box>
